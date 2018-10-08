@@ -13,17 +13,43 @@
 
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
+import styled from 'styled-components';
 
 import HomePage from 'features/HomePage/Loadable';
 import NotFoundPage from 'features/NotFoundPage/Loadable';
+import Header from '../../../packages/Header';
+
+const AppWrapper = styled.div`
+  width: 100%;
+  margin: 0 auto;
+`;
+
+const HeaderWrapper = styled.div`
+  width: 100%;
+  background: black;
+  height: 60px;
+`;
 
 export default function App() {
   return (
-    <div>
+    <AppWrapper>
+      <Helmet
+        titleTemplate="%s - React.js Boilerplate"
+        defaultTitle="React.js Boilerplate"
+      >
+        <meta name="description" content="A React.js Boilerplate application" />
+      </Helmet>
+      <HeaderWrapper>
+        <Header />
+      </HeaderWrapper>
       <Switch>
         <Route exact path="/" component={HomePage} />
-        <Route component={NotFoundPage} />
+        {/* <Route path="/features" component={FeaturePage} /> */}
+        {/* <Route path="/login" component={LoginPage} /> */}
+        <Route path="" component={NotFoundPage} />
       </Switch>
-    </div>
+      {/* <Footer /> */}
+    </AppWrapper>
   );
 }
