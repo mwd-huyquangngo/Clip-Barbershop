@@ -5,6 +5,8 @@
 const path = require('path');
 const webpack = require('webpack');
 
+const APP_DIR = path.resolve(path.dirname(path.dirname(__dirname)));
+
 // Remove this line once the following warning goes away (it was meant for webpack loader authors not users):
 // 'DeprecationWarning: loaderUtils.parseQuery() received a non-string value which can be problematic,
 // see https://github.com/webpack/loader-utils/issues/56 parseQuery() will be replaced with getOptions()
@@ -25,6 +27,14 @@ module.exports = options => ({
   optimization: options.optimization,
   module: {
     rules: [
+      {
+        test: /\.jsx$/, // Transform all .js files required somewhere with Babel
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: options.babelQuery,
+        },
+      },
       {
         test: /\.js$/, // Transform all .js files required somewhere with Babel
         exclude: /node_modules/,
@@ -132,6 +142,16 @@ module.exports = options => ({
     modules: ['node_modules', 'app'],
     extensions: ['.js', '.jsx', '.react.js'],
     mainFields: ['browser', 'jsnext:main', 'main'],
+    alias: {
+      // libs: path.resolve(`${APP_DIR}/packages/libs`),
+      // infrastructure: path.resolve(`${APP_DIR}/app/infrastructure`),
+      // themeModule: path.resolve(`${APP_DIR}/app/themes`),
+      // themeProvider$: path.resolve(
+      //   `${APP_DIR}/packages/theme/ThemeProvider.js`,
+      // ),
+      // ui: path.resolve(`${APP_DIR}/packages/ui`),
+      packages: path.resolve(`${APP_DIR}/packages`),
+    },
   },
   devtool: options.devtool,
   target: 'web', // Make web variables accessible to webpack, e.g. window

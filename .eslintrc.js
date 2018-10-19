@@ -11,6 +11,7 @@ module.exports = {
     node: true,
     jest: true,
     es6: true,
+    jquery: true,
   },
   parserOptions: {
     ecmaVersion: 6,
